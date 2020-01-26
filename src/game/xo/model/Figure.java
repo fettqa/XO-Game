@@ -1,4 +1,4 @@
-package game.io.model;
+package game.xo.model;
 
 public enum Figure {
     X, O
