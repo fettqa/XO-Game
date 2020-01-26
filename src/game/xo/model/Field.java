@@ -1,5 +1,8 @@
 package game.xo.model;
 
+import game.xo.model.exceptions.InvalidPointException;
+import game.xo.model.exceptions.PointAlreadyOccupiedException;
+
 import java.awt.*;
 
 public class Field {
@@ -15,12 +18,22 @@ public class Field {
         return FIELD_SIZE;
     }
 
-    public Figure getFigure(final Point point) {
+    public Figure getFigure(final Point point) throws InvalidPointException {
+        if (!checkPoint(point)) {
+            throw new InvalidPointException();
+        }
         return field[point.x][point.y];
     }
 
-    public void setFigure(final Point point, Figure figure) {
-        this.field[point.x][point.y] = figure;
+    public void setFigure(final Point point, Figure figure) throws InvalidPointException, PointAlreadyOccupiedException {
+        if (!checkPoint(point)) {
+            throw new InvalidPointException();
+        }
+        if (field[point.x][point.y] != null){
+            throw new PointAlreadyOccupiedException();
+        }
+        field[point.x][point.y] = figure;
+
     }
 
     private boolean checkPoint(final Point point){
