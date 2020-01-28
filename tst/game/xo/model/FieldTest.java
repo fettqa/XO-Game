@@ -79,17 +79,4 @@ class FieldTest {
         } catch (InvalidPointException e) {
         }
     }
-
-    @Test
-    public void setFigureAlreadyOccupied() throws Exception {
-        final Field field = new Field();
-        final Point inputPoint = new Point(0, 0);
-        final Figure inputFigure = Figure.O;
-
-        field.setFigure(inputPoint,inputFigure);
-        try {
-            field.getFigure(inputPoint);
-            fail();
-        } catch (InvalidPointException e) {}
-    }
 }
