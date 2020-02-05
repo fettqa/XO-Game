@@ -17,14 +17,14 @@ public class WinnerController {
                 }
             }
             for (int i =0; i< 3; i++) {
-                if (checkWinnerCondition(field, new Point(i, 0), p -> new Point(p.x + 1, p.y))) {
-                    return field.getFigure(new Point(i, 0));
+                if (checkWinnerCondition(field, new Point(0, i), p -> new Point(p.x + 1, p.y))) {
+                    return field.getFigure(new Point(0, i));
                 }
             }
             if (checkWinnerCondition(field, new Point(0, 0), p -> new Point(p.x + 1, p.y + 1))) {
                 return field.getFigure(new Point(0, 0));
             }
-            if (checkWinnerCondition(field, new Point(0, 0), p -> new Point(p.x + 1, p.y - 1))) {
+            if (checkWinnerCondition(field, new Point(0, 2), p -> new Point(p.x + 1, p.y - 1))) {
                 return field.getFigure(new Point(1, 1));
             }
         } catch (InvalidPointException e){
@@ -41,20 +41,23 @@ public class WinnerController {
         final Point nextPoint = pointGenerator.next(currentPoint);
         try {
             currentFigure = field.getFigure(currentPoint);
+
+            if (currentFigure == null)
+                return false;
+
             nextFigure = field.getFigure(nextPoint);
         } catch (final InvalidPointException e) {
             return true;
         }
 
-        if (currentFigure == null) return false;
-
-        if (currentFigure != nextFigure) return false;
+        if (currentFigure != nextFigure)
+            return false;
 
         return checkWinnerCondition(field, nextPoint, pointGenerator);
 
     }
 
     private interface IPointGenerator {
-        public Point next(final Point point);
+        Point next(final Point point);
     }
 }
